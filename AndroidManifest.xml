@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sf.cargoowner">
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="21" />
+
+    <!-- Required -->
+    <permission
+        android:name="com.sf.cargoowner.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.sf.cargoowner.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:name=".base.SFBaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:launchMode="singleInstance" />
+        <activity android:name=".ui.register.RegisterStep1Activity" />
+        <activity android:name=".ui.register.RegisterStep2Activity" />
+        <activity android:name=".ui.resetpassword.ResetPasswordActivity" />
+        <activity
+            android:name=".ui.register.PerfectInfoActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity android:name=".ui.message.MessageCenterActivity" />
+        <activity android:name=".ui.message.MessageSettingsActivity" />
+        <activity
+            android:name=".ui.message.MessageNotifactionActivity"
+            android:launchMode="singleInstance" />
+        <activity android:name=".ui.mine.activity.AccountSafeActivity" />
+        <activity android:name=".ui.mine.activity.EmployEmpActivity" />
+        <activity android:name=".ui.mine.settings.consignor.manager.ManagerConsignorActivity" />
+        <activity android:name=".ui.mine.settings.consignor.add.AddConsignorActivity" />
+        <activity android:name=".ui.mine.settings.about.AboutActivity" />
+        <activity android:name=".ui.mine.feedback.FeedbackActivity" />
+        <activity android:name=".ui.mine.settings.SettingsActivity" />
+        <activity android:name=".ui.mine.settings.usersafe.AccountSecurityActivity" />
+        <activity android:name=".ui.mine.settings.userinfo.UserInfoActivity" />
+        <activity android:name=".ui.order.TimeLineActivity" />
+
+        <!-- 货源发布成功和失败界面 -->
+        <activity android:name=".ui.sendgoods.PublishSuccessActivity" />
+        <activity android:name=".ui.sendgoods.PublishFailActivity" />
+
+        <!-- 账户管理界面 -->
+        <activity android:name=".ui.mine.account.AccountManageActivity" />
+
+        <!-- 增值税发票维护界面 -->
+        <activity android:name=".ui.mine.account.invoice.InvoiceActivity" />
+
+        <!-- 发票地址、编辑地址、地址界面 -->
+        <activity android:name=".ui.mine.account.address.EditAddressActivity" />
+
+        <provider
+            android:name=".ui.message.MsgProvider"
+            android:authorities="com.sf.cargoowner.msgprovider" /> <!-- android:exported="true" 供外部使用 -->
+
+
+        <!-- Rich push 核心功能 since 2.0.6 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle" />
+
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.sf.cargoowner" />
+            </intent-filter>
+        </activity>
+
+        <!-- 引导界面 -->
+        <activity android:name=".ui.Welcome"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait"/>
+
+        <!-- Required  SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:process=":mult">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.sf.cargoowner" />
+            </intent-filter>
+        </service>
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+                <category android:name="com.sf.cargoowner" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
+
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
+        <receiver
+            android:name=".ui.message.JpushMsgReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.sf.cargoowner" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="e819e563b0fb1cd9a264a6a7" /> <!-- </>值来自开发者平台取得的AppKey -->
+        <activity
+            android:name=".ui.sendgoods.SendGoodsActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.bookspace.BookSpaceActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.bookspace.CityPickerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <!-- android:theme="@style/CityPicker.NoActionBar" -->
+
+        <activity android:name=".ui.tailtank.RobSpaceActivity" />
+        <activity android:name=".ui.delivery.FindSendActivity" />
+        <activity android:name=".ui.bookspace.SearchActivity" />
+        <activity android:name=".ui.bookspace.SearchSpaceDetailActivity" />
+        <activity android:name=".ui.bookspace.OrderDetailActivity" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity android:name=".ui.protocol.ShowIntroductionsActivity" />
+        <activity android:name=".ui.order.OrderDetail.OrderDetailActivity" />
+        <activity
+            android:name="com.sf.cargoowner.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="wxeb4865c134822398"/>
+                <!-- appId -->
+            </intent-filter>
+        </activity>
+        <receiver android:name="com.sf.cargoowner.wxapi.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".wxapi.PayActivity"/>
+
+        <activity android:name=".ui.order.OrderDetail.InvoiceActivity"></activity>
+    </application>
+
+</manifest>
